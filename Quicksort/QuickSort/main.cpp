@@ -5,7 +5,22 @@ using namespace std;
 void quickSort(int list[], int start, int end);
 int main()
 {
-	
+	int arr[] = { 1, 12, 5, 26, 7, 14, 3, 7, 2 };
+	cout << "The lis is: \n";
+	for (int i = 0; i < 9; i++)
+	{
+		cout << arr[i] << ", ";
+	}
+	cout << "\n";
+	quickSort(arr, 0, 8);
+	cout << "The sorted list is: \n";
+	for (int i = 0; i < 9; i++)
+	{
+		cout << arr[i] << ", ";
+	}
+	cout << "\n";
+	system("pause");
+	return 0;
 }
 
 void quickSort(int list[], int start, int end)
