@@ -26,4 +26,8 @@ void quickSort(int list[], int start, int end)
 			b--;
 		}
 	};
+	if (start < b)
+		quickSort(list, start, b);
+	if (a < end)
+		quickSort(list, a, end);
 }
