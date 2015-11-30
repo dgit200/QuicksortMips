@@ -81,13 +81,21 @@ if1:
   slt $s0, $s1, $t2	# start < b
   blez $s0, end
   add $s2, $t2, $0	# end = b
-  jal sort
+  addi $sp, $sp, -4
+  sw $ra, 0($sp)
+  jal sort		#recursion(upper half)
+  lw $ra, 0 ($sp)
+  addi $sp, $sp, 4
 
 if2:
   slt $s0, $t1, $s2
   blez $s0, end
   add $s1, $t1, $0	# start = a
-  jal sort
+  addi $sp, $sp, -4
+  sw $ra, 0($sp)
+  jal sort		#recursion(lower half)
+  lw $ra, 0 ($sp)
+  addi $sp, $sp, 4
 end:
   jr $ra
 
