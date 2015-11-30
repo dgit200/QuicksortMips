@@ -42,7 +42,9 @@ first:
 w1:
   sll $t4, $t1, 2	# $t1*4 = a offset
   add $t4, $t4, $t0	# array[a] = 0($t4)
-  slt $s0, 0($t4), 0($t3)	#array[a] < pivot
+  lw $t6, 0($t3)
+  lw $t7, 0($t4)
+  slt $s0, $t7, $t6	#array[a] < pivot 
   blez $s0, w2
 
 w2:
