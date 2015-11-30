@@ -33,10 +33,15 @@ done:
   syscall
 
 sort:
+  addi $a1, $0, 2
+  addi $a2, $0, 4
   add $t1, $s1, $0	# t1 = a
   add $t2, $s2, $0	# t2 = b
   add $t3, $t1, $t2	# t3 = a+b
-  sll $t3, $t3, 1	# Optimized [(a+b)/2]*4 for offset of index  
+  div $t3, $a1
+  mflo $t3
+  mult $t3, $a2
+  mflo $t3  
   add $t3, $t3, $a0	# 0($t3) = pivot
   lw $t6, 0($t3)	# $t6 = pivot
 first:
