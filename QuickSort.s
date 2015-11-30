@@ -40,6 +40,11 @@ first:
   slt $s0, $t2, $t1	# a <= b
   bgtz $s0 last		# if (a <= b) NOT
 w1:
+  sll $t4, $t1, 2	# $t1*4 = a offset
+  add $t4, $t4, $t0	# array[a] = 0($t4)
+  slt $s0, 0($t4), 0($t3)	#array[a] < pivot
+  blez $s0, w2
+
 w2:
 if:
 
