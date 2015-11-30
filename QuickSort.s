@@ -54,20 +54,11 @@ w2:
   slt $s0, $t6, $t7     # array[b] > pivot
   blez $s0, if
 
-
 if:
 
 last:
 if1:
 if2:
-
-  li $v0, 1
-  lw $a0, 0($t3)
-  syscall
-  li $v0, 4
-  la $a0, newline
-  syscall
-
   jr $ra
 
 .data
