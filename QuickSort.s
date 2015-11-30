@@ -88,7 +88,7 @@ if1:
   addi $sp, $sp, 4
 
 if2:
-  slt $s0, $t1, $s2
+  slt $s0, $t1, $s2	# a < end
   blez $s0, end
   add $s1, $t1, $0	# start = a
   addi $sp, $sp, -4
