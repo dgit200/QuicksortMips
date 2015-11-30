@@ -1,16 +1,15 @@
 #Quick sort algorithm
-
-.data
-array: .word 1, 12, 5, 26, 7, 14, 3, 8, 2
-space: .asciiz " "
-newline: .asciiz "\n"
-
+.text
+.globl main
 main:
-  la $t0, array		# load array address
+  la $a0, array		# load array address
+  la $t0, size
+  lw $a1, 0($t0)	# a1 = size of array
+
   addi $s1, $s1, 0	# s1 = start index
   addi $s2, $s2, 8	# s2 = end index
 
-  move $s2, $a0
+  move $t0, $a0
   add $t1, $0, $0
 print:
   li $v0, 1
@@ -31,3 +30,7 @@ done:
   li $v0, 10
   syscall
 
+.data
+array: .word 1, 12, 5, 26, 7, 14, 3, 8, 2
+space: .asciiz " "
+newline: .asciiz "\n"
