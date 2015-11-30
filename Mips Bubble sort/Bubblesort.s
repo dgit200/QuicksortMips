@@ -12,6 +12,9 @@ comma: .asciiz ", "
 .globl main
 main:
 
+	la $a2, list
+	li $a1, 24
+
 end:
 	li $v0, 10
 	syscall
