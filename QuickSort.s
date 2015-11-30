@@ -34,8 +34,7 @@ sort:
   add $t1, $s1, $0	# t1 = a
   add $t2, $s2, $0	# t2 = b
   add $t3, $t1, $t2	# t3 = a+b
-  srl $t3, $t3, 1	# (a+b)/2
-  sll $t3, $t3, 2	# Multiply by 4 for offset of index
+  sll $t3, $t3, 1	# Optimized [(a+b)/2]*4 for offset of index  
   add $t3, $t3, $a0	# 0($t3) = pivot
 
   li $v0, 1
