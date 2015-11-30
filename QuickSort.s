@@ -30,6 +30,23 @@ done:
   li $v0, 10
   syscall
 
+sort:
+  add $t1, $s1, $0	# t1 = a
+  add $t2, $s2, $0	# t2 = b
+  add $t3, $t1, $t2	# t3 = a+b
+  srl $t3, $t3, 1	# (a+b)/2
+  sll $t3, $t3, 2	# Multiply by 4 for offset of index
+  add $t3, $t3, $a0	# 0($t3) = pivot
+
+  li $v0, 1
+  lw $a0, 0($t3)
+  syscall
+  li $v0, 4
+  la $a0, newline
+  syscall
+
+  jr $ra
+
 .data
 array: .word 1, 12, 5, 26, 7, 14, 3, 8, 2
 size: .word 9
