@@ -14,6 +14,22 @@ main:
 
 	la $a2, list
 	li $a1, 24
+	jal bubblesort
+	
+	
+	li $t0, 0
+	move $t1, $a2
+	printloop:
+	beq $t0, $a1, end
+	li 	$v0, 1
+	lw $a0 ($t1)
+	syscall
+	li $v0, 4
+	la $a0, comma
+	syscall
+	addi $t0, $t0, 1
+	addi $t1, $t1, 4
+	j printloop
 
 end:
 	li $v0, 10
