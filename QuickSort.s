@@ -55,6 +55,12 @@ w2:
   blez $s0, if
 
 if:
+  slt $s0, $t2, $t1	# a <= b
+  bgtz $s0 last		# if (a <= b) NOT
+  lw $s3, 0($t4)
+  lw $s4, 0($t5)
+  sw $s3, 0($t5)
+  sw $s4, 0($t4)	# swap values a&b
 
 last:
 if1:
