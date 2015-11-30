@@ -44,10 +44,18 @@ w1:
   add $t4, $t4, $t0	# array[a] = 0($t4)
   lw $t6, 0($t3)
   lw $t7, 0($t4)
-  slt $s0, $t7, $t6	#array[a] < pivot 
+  slt $s0, $t7, $t6	# array[a] < pivot 
   blez $s0, w2
 
 w2:
+  sll $t5, $t2, 2       # $t2*4 = a offset
+  add $t5, $t5, $t0     # array[b] = 0($t5)
+  lw $t6, 0($t3)
+  lw $t7, 0($t5)
+  slt $s0, $t6, $t7     # array[b] > pivot
+  blez $s0, if
+
+
 if:
 
 last:
