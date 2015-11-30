@@ -8,6 +8,8 @@ main:
 
   addi $s1, $s1, 0	# s1 = start index
   addi $s2, $s2, 8	# s2 = end index
+  
+  jal sort
 
   la $t0, array
   add $t1, $0, $0
@@ -46,6 +48,8 @@ w1:
   lw $t7, 0($t4)
   slt $s0, $t7, $t6	# array[a] < pivot 
   blez $s0, w2
+  addi $t1, $t1, 1	#a++
+  j w1
 
 w2:
   sll $t5, $t2, 2       # $t2*4 = a offset
@@ -53,6 +57,8 @@ w2:
   lw $t7, 0($t5)
   slt $s0, $t6, $t7     # array[b] > pivot
   blez $s0, if
+  addi $t2, $t2, -1	#b—-
+  j w2
 
 if:
   slt $s0, $t2, $t1	# a <= b
@@ -61,14 +67,22 @@ if:
   lw $s4, 0($t5)
   sw $s3, 0($t5)
   sw $s4, 0($t4)	# swap values a&b
+  addi $t1, $t1, 1	#a++
+  addi $t2, $t2, -1	#b—-
+  j first
 
 last:
 if1:
   slt $s0, $s1, $t2	# start < b
   blez $s0, end
+  add $s2, $t2, $0	# end = b
+  jal sort
+
 if2:
   slt $s0, $t1, $s2
   blez $s0, end
+  add $s1, $t1, $0	# start = a
+  jal sort
 end:
   jr $ra
 
