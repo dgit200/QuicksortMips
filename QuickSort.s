@@ -9,7 +9,7 @@ main:
   addi $s1, $s1, 0	# s1 = start index
   addi $s2, $s2, 8	# s2 = end index
 
-  move $t0, $a0
+  la $t0, array
   add $t1, $0, $0
 print:
   li $v0, 1
