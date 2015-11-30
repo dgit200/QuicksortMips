@@ -64,7 +64,12 @@ if:
 
 last:
 if1:
+  slt $s0, $s1, $t2	# start < b
+  blez $s0, end
 if2:
+  slt $s0, $t1, $s2
+  blez $s0, end
+end:
   jr $ra
 
 .data
