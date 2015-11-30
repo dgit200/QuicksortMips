@@ -79,7 +79,7 @@ if:
 last:
 if1:
   slt $s0, $s1, $t2	# start < b
-  blez $s0, end
+  blez $s0, if2
   add $s2, $t2, $0	# end = b
   addi $sp, $sp, -4
   sw $ra, 0($sp)
