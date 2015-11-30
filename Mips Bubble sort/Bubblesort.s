@@ -18,3 +18,16 @@ main:
 end:
 	li $v0, 10
 	syscall
+
+
+
+bubblesort:
+	addi $t0, $t0, 0
+	move $t1, $a1
+	addi $t3, $a1, -1
+	firstloop:
+		beq $t0, $t1, endsort  # while (i < size)
+		li $t2, 0	# j = 0	
+
+endsort:			
+	jr $ra
