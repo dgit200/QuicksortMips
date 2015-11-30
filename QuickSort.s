@@ -33,14 +33,14 @@ done:
   syscall
 
 sort:
-  addi $a1, $0, 2
-  addi $a2, $0, 4
+  addi $t8, $0, 2
+  addi $t9, $0, 4
   add $t1, $s1, $0	# t1 = a
   add $t2, $s2, $0	# t2 = b
   add $t3, $t1, $t2	# t3 = a+b
-  div $t3, $a1
+  div $t3, $t8
   mflo $t3
-  mult $t3, $a2
+  mult $t3, $t9
   mflo $t3  
   add $t3, $t3, $a0	# 0($t3) = pivot
   lw $t6, 0($t3)	# $t6 = pivot
