@@ -36,6 +36,16 @@ sort:
   add $t3, $t1, $t2	# t3 = a+b
   sll $t3, $t3, 1	# Optimized [(a+b)/2]*4 for offset of index  
   add $t3, $t3, $a0	# 0($t3) = pivot
+first:
+  slt $s0, $t2, $t1	# a <= b
+  bgtz $s0 last		# if (a <= b) NOT
+w1:
+w2:
+if:
+
+last:
+if1:
+if2:
 
   li $v0, 1
   lw $a0, 0($t3)
