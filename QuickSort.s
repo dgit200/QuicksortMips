@@ -50,7 +50,7 @@ first:
   bgtz $s0 last		# if (a <= b) NOT
 w1:
   sll $t4, $t1, 2	# $t1*4 = a offset
-  add $t4, $t4, $t0	# array[a] = 0($t4)
+  add $t4, $t4, $a0	# array[a] = 0($t4)
   lw $t7, 0($t4)
   slt $s0, $t7, $t6	# array[a] < pivot 
   blez $s0, w2
@@ -59,7 +59,7 @@ w1:
 
 w2:
   sll $t5, $t2, 2       # $t2*4 = a offset
-  add $t5, $t5, $t0     # array[b] = 0($t5)
+  add $t5, $t5, $a0     # array[b] = 0($t5)
   lw $t7, 0($t5)
   slt $s0, $t6, $t7     # array[b] > pivot
   blez $s0, if
