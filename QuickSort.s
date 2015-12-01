@@ -7,7 +7,8 @@ main:
   lw $a1, 0($t0)	# a1 =  array(size)
 
   add  $s1, $0, $0	# s1 = start index
-  addi $s2, $0, 8	# s2 = end index
+  lw $s2, 0($t0)
+  addi $s2, $s2, -1	# s2 = end index
   
   jal sort
 
