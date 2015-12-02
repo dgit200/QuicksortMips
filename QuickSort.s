@@ -79,15 +79,20 @@ if:
 
 last:
 if2:
+  addi $sp, $sp, -12
+  sw $s1, 0($sp)
+  sw $t2, 4($sp)
+  sw $ra, 8($sp)
   slt $s0, $t1, $s2     # a < end
   blez $s0, if1
   add $s1, $t1, $0      # start = a
-  addi $sp, $sp, -4
-  sw $ra, 0($sp)
   jal sort              #recursion(lower half)
-  lw $ra, 0 ($sp)
 
 if1:
+  lw $s1, 0($sp)
+  lw $t2, 4($sp)
+  lw $ra, 8($sp)
+  addi $sp, $sp, 12
   slt $s0, $s1, $t2	# start < b
   blez $s0, end
   add $s2, $t2, $0	# end = b
