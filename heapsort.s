@@ -1,5 +1,3 @@
-
-om
 #
 # heapsort.s
 # An implementation of heapsort algorithm 
