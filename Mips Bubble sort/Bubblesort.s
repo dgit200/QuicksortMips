@@ -7,6 +7,7 @@
 list: .word 54, 23, 56, 32, 99, 7, 4, 2, 88, 9, 11, 21, 39, 55, 100, 101, 43, 1, 3, 69, -5, -24, -17, 0
 space: .asciiz " "
 comma: .asciiz ", "
+newline: .asciiz "\n"
 
 .text
 .globl main
@@ -19,23 +20,24 @@ main:
 	
 	li $t0, 0								# Setting Variables for printing the array
 	move $t1, $a2							# Setting Variables for printing the array	
-	printloop:								# Calling the print loop
-	beq $t0, $a1, end						# while (n < size)
-	li 	$v0, 1								# print integer
+printloop:								# Calling the print loop
+	li $v0, 1			
 	lw $a0 ($t1)
-	syscall
-	li $v0, 4								# print comma in between integers
-	la $a0, comma
-	syscall
+	syscall			# print integer
+	li $v0, 4		
+	la $a0, space
+	syscall			# print space
 	addi $t0, $t0, 1
 	addi $t1, $t1, 4
-	j printloop
 
-end:										# End the program
-	li $v0, 10
+	bne $t0, $a1, printloop	# while(t0 != size)
+	li $v0, 4
+	la $a0, newline
 	syscall
 
-
+end:				# End the program
+	li $v0, 10
+	syscall
 
 bubblesort:									# The bubble sort function
 	addi $t0, $t0, 0						# Setting up variables needed for nested loops
