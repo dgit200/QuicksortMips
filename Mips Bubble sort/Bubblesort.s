@@ -5,6 +5,7 @@
 .data
 # the array that holds unordered data
 list: .word 54, 23, 56, 32, 99, 7, 4, 2, 88, 9, 11, 21, 39, 55, 100, 101, 43, 1, 3, 69, -5, -24, -17, 0
+size: .word 24
 space: .asciiz " "
 comma: .asciiz ", "
 newline: .asciiz "\n"
@@ -14,11 +15,12 @@ newline: .asciiz "\n"
 main:
 
 	la $a2, list					# Setting array to $a2
-	li $a1, 24						# Setting the size to $a1
+	la $a1, size
+        lw $a1, 0($a1)					# Setting the size to $a1
 	jal bubblesort					# Calling the bubble sort function
 	
 	
-	li $t0, 0								# Setting Variables for printing the array
+	li $t0, 0							# Setting Variables for printing the array
 	move $t1, $a2							# Setting Variables for printing the array	
 printloop:								# Calling the print loop
 	li $v0, 1			
