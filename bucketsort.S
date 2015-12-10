@@ -1,102 +1,97 @@
-#MIPS MONSTERS
+# MIPS MONSTERS
 #
-#Bucket Sort
+#Bucket Sort Algorithm
 
 .text
 .globl main
 
 main:
-                       #int n = sizeof (array) / sizeof (array[0]);
-                       #$t0 = n
-                       #$t1 = size of array
-                       #$t2 = size of array[0]
-                       #$s0 = array
-                       #$s1 = 4  (size of word)
-la $t1, SIZE
-lw $t1, 0($t1)
-la $t8, ARRAY
-move $s0, $t8
-lw $t2, 0($s0)
-div $t1, $t2
-mflo $v0 # quotient to $v0
-move $t0, $v0
-addi $s1, $0, 4
+  la $s0, array         # load array address
+  la $s1, size
+  lw $a1, 0($s1)        # a1 =  array(size)
 
-bucketSort:
-                       #$t3 = int m
-                       #$t4 = buckets
-addi $t3, $0, 101
-li $v0, 9
-move $a0, $t3
-syscall
-move $t4, $v0         #automatically initialized to 0
-add $t5,$0, $0
+  jal bucketsort
+  la $t0, array
+  add $t1, $0, $0
 
+print:
+  li $v0, 1
+  lw $a0, 0($t0)
+  addi $t0, $t0, 4
+  addi $t1, $t1, 1
+  syscall
+  li $v0, 4
+  la $a0, space
+  syscall
 
-LOOP:
-slt $t9, $t5, $t0
-beq $t9, $0, NEXT
-addi $t5, $t5, 1
-mult $s1, $t5
-mflo $t9
-add $t9, $t9, $s0
-lw $t9, 0 ($t9)
-mult $s1, $t9
-mflo $t9
-add $t9, $t9, $t4
-addi $t9, $t9, 1 
-move $t4, $t9
-j LOOP
+  bne $t1, $a1, print   # while(t1 != size)
+  li $v0, 4
+  la $a0, newline
+  syscall
 
+done:
+  li $v0, 10
+  syscall
 
-NEXT:
-                       #$t5 = i
-                       #$t6 = j
-                       #$t9 = checking variable
-add $t5, $0, $0        #Initialize i to 0
-add $t6, $0, $0        #Intialize j to 0
   
+bucketsort:
+ 
 
-forLoop1: 
-slt $t9, $t6, $t3      # j < m
-beq $t9, 0, PRINT 
-addi $t6, $t6, 1       #increment j
-                       #$t7 = k
-                       #t8 = reseting address of buckets
-mult $s1, $t6
-mflo $t9
-move $t8, $t4
-add $t8, $t8, $t9
-sw $t9 ($t8)
-move $t7, $t9   
-
-
-forLoop2:
-slt $t9, $t7, $0
-bne $t9, $0 forLoop1
-addi $t7, $t7, -1  
-sw $t6, 0($s0)
-addi $s0, $s0, 4
-j forLoop2
-
-PRINT:
-slt $t9, $t5, $t0
-beq $t9, $0, DONE
-lw $t9, 0($s0)
-li $v0, 1
-move $a0, $t9
-syscall
-addi $s0, $s0, 4
-addi $t5, $t5, 1
-j PRINT 
-   
-
-DONE:
-li $v0, 10             #end program
-syscall
+ addi $s0, $0, 10	# $s0 = m, range
+ add $t2, $s0, $0
+ addi $t3, $0, 32	# $t3 = 32 
+ addi $t4, $0, 8	# $t4 = 8
+ mult $t2, $t3
+ mflo $t3
+ div $t3, $t4
+ mflo $t3
+ li $v0, 9		# load to allocate memory
+ move $a0, $t3	# load bytes
+ syscall
+ move $a2, $v0	# BUCKETS = 0($a2), buckets[10]
 
 
+ la $t6, array	# $t6 = arr[i]
+ addi $t4, $0, 4	# $t4 = 4
 
+inner_loop:
+  lw $t5, 0($t6)	# array[i]
+  mult $t5, $t4 	# $t5*4 = offset for buckets[]
+  mflo $t5
+  add $t5, $t5, $a2	# offset(buckets)
+  lw $t7, 0($t5)
+  addi $t7, $t7, 1	# ++
+  sw $t7, 0($t5)	# ++buckets[arr[i]]
+  addi $t6, $t6, 4	# for i++, increment to next place in arr[]
+  bne $t6, $s1, inner_loop  # while(t2 != size)
+
+ la $t6, array	# $t6 = arr[i]
+ la $t0, 0($a2)	# $t0 = buckets[]
+ add $t1, $0, $0	# i = 0
+ add $t2, $0, $0	# offset of j
+ add $t3, $t3, $a2
+ add $t7, $0, $0	# j = 0
+
+outer_loop:
+ lw $t5, 0($t0)		# k = buckets[j]
+ blez $t5, bucket_up		# if k = 0, loop
+ sw $t7, 0($t6)		# arr[i] = j
+ addi $t6, $t6, 4		# arr[i++]
+ addi $t7, $t7, 1		# j++
+ addi $t0, $t0, 4		# offset j++;
+ bne $t0, $t3, outer_loop		# while j < m
+
+bucket_up:
+  beq $t0, $t3, end		# stop subprogram
+  addi $t0, $t0, 4		# offset j++;
+  addi $t7, $t7, 1		# j++
+  j outer_loop
+ 
+end:
+ jr $ra
+ 
 .data
-ARRAY: .word 10, 24, 22, 62, 1, 50, 100, 75, 2, 3
-SIZE: .word 10
+array: .word 9, 1, 5
+size: .word 3
+space: .asciiz " "
+newline: .asciiz "\n"
