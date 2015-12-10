@@ -40,7 +40,8 @@ int main() {
 		}
 	}
 
-	//Print out sorted array
+    
+	//Print out sorted array once
 	cout << "Sorted Array is: " << endl;
 	for (int i = 0; i<5; i++)
 	{
