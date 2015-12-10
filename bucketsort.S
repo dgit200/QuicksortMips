@@ -34,8 +34,24 @@ done:
 
   
 bucketsort:
- 
- addi $s0, $0, 10	# $s0 = m, range
+ la $t5, array	# $t6 = arr[i]
+ lw $t7, 0($t5)	# load MAX
+
+range:
+ addi $t5, $t5, 4
+ lw $t8, 0($t5)
+ sltu $s2, $t7, $t8
+ bgtz $s2, max
+ bne $t5, $s1, range
+ addi $t7, $t7, 1
+ j start
+
+max:
+ add $t7, $t8, $0
+ j range
+
+start:
+ add $s0, $t7, $0	# $s0 = m, range 
  add $t2, $s0, $0
  addi $t3, $0, 32	# $t3 = 32 
  addi $t4, $0, 8	# $t4 = 8
@@ -47,7 +63,6 @@ bucketsort:
  move $a0, $t3	        # load bytes
  syscall
  move $a2, $v0	        # BUCKETS = 0($a2), buckets[10]
-
 
  la $t6, array	        # $t6 = arr[i]
  addi $t4, $0, 4	# $t4 = 4
