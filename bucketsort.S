@@ -6,7 +6,6 @@
 .globl main
 
 main:
-  la $s0, array         # load array address
   la $s1, size
   lw $a1, 0($s1)        # a1 =  array(size)
 
@@ -36,7 +35,6 @@ done:
   
 bucketsort:
  
-
  addi $s0, $0, 10	# $s0 = m, range
  add $t2, $s0, $0
  addi $t3, $0, 32	# $t3 = 32 
@@ -46,12 +44,12 @@ bucketsort:
  div $t3, $t4
  mflo $t3
  li $v0, 9		# load to allocate memory
- move $a0, $t3	# load bytes
+ move $a0, $t3	        # load bytes
  syscall
- move $a2, $v0	# BUCKETS = 0($a2), buckets[10]
+ move $a2, $v0	        # BUCKETS = 0($a2), buckets[10]
 
 
- la $t6, array	# $t6 = arr[i]
+ la $t6, array	        # $t6 = arr[i]
  addi $t4, $0, 4	# $t4 = 4
 
 inner_loop:
